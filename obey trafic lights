@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+string color_at_time(long long t) {
+    const int G = 20;
+    const int Y = 3;
+    const int R = 80;
+    const int CYCLE = G + Y + R; // 103
+
+    // Offsetting agar pos(45) = 20 (awal kuning)
+    const long long START = 25; // 45 - 20
+
+    long long pos = ( (t - START) % CYCLE + CYCLE ) % CYCLE; // non-negative
+
+    if (pos < G) return "Hijau";
+    if (pos < G + Y) return "Kuning";
+    return "Merah";
+}
+
+int main() {
+    // Contoh input: bisa ganti/gabung dengan input interaktif
+    vector<long long> queries = {80, 135, 150, 212};
+
+    cout << "Durasi: Hijau=20s, Kuning=3s, Merah=80s. Clue: kuning di detik 45..47\n\n";
+    for (long long t : queries) {
+        cout << "Detik " << t << " -> " << color_at_time(t) << '\n';
+    }
+
+    // Opsi interaktif
+    cout << "\nMasukkan detik (0 untuk keluar):\n";
+    while (true) {
+        long long t;
+        cout << "> ";
+        if (!(cin >> t)) break;
+        if (t == 0) break;
+        cout << "Detik " << t << " -> " << color_at_time(t) << '\n';
+    }
+
+    return 0;
+}
